@@ -3,6 +3,7 @@ using RimWorld;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -90,9 +91,14 @@ namespace BetterHemogenFarm
             Text.Font = GameFont.Small;
             if (pawn.def.race.IsFlesh)
             {
-                Pair<string, Color> painLabel = GetPainLabel(pawn);
-                string painTip = GetPainTip(pawn);
-                curY = DrawLeftRow(leftRect, curY, "PainLevel".Translate(), painLabel.First, painLabel.Second, painTip);
+                Pair<string, Color> painLabel = HealthCardUtility.GetPainLabel(pawn);
+                string painTip = HealthCardUtility.GetPainTip(pawn);
+                //curY = DrawLeftRow(leftRect, curY, "PainLevel".Translate(), painLabel.First, painLabel.Second, painTip);
+                //class HealthCardUtility
+                //private static float DrawLeftRow(Rect leftRect, float curY, string leftLabel, string rightLabel, Color rightLabelColor, TipSignal tipSignal)
+                MethodInfo dynMethod = typeof(HealthCardUtility).GetMethod("DrawLeftRow", BindingFlags.Static | BindingFlags.NonPublic);
+                //curY = DrawLeftRow(leftRect, curY, "PainLevel".Translate(), painLabel.First, painLabel.Second, painTip);
+                curY = (float)dynMethod.Invoke(obj: null, parameters: new object[] { leftRect, curY, "PainLevel".Translate(), painLabel.First, painLabel.Second, painTip });
             }
             if (!pawn.Dead)
             {
@@ -107,16 +113,21 @@ namespace BetterHemogenFarm
                         if (PawnCapacityUtility.BodyCanEverDoCapacity(pawn.RaceProps.body, item))
                         {
                             PawnCapacityDef activityLocal = item;
-                            Pair<string, Color> efficiencyLabel = GetEfficiencyLabel(pawn, item);
+                            Pair<string, Color> efficiencyLabel = HealthCardUtility.GetEfficiencyLabel(pawn, item);
                             Func<string> textGetter = delegate
                             {
                                 if (!pawn.Dead)
                                 {
-                                    return GetPawnCapacityTip(pawn, activityLocal);
+                                    return HealthCardUtility.GetPawnCapacityTip(pawn, activityLocal);
                                 }
                                 return "";
                             };
-                            curY = DrawLeftRow(leftRect, curY, item.GetLabelFor(pawn.RaceProps.IsFlesh, pawn.RaceProps.Humanlike).CapitalizeFirst(), efficiencyLabel.First, efficiencyLabel.Second, new TipSignal(textGetter, pawn.thingIDNumber ^ item.index));
+                            //curY = DrawLeftRow(leftRect, curY, item.GetLabelFor(pawn.RaceProps.IsFlesh, pawn.RaceProps.Humanlike).CapitalizeFirst(), efficiencyLabel.First, efficiencyLabel.Second, new TipSignal(textGetter, pawn.thingIDNumber ^ item.index));
+                            //class HealthCardUtility
+                            //private static float DrawLeftRow(Rect leftRect, float curY, string leftLabel, string rightLabel, Color rightLabelColor, TipSignal tipSignal)
+                            MethodInfo dynMethod = typeof(HealthCardUtility).GetMethod("DrawLeftRow", BindingFlags.Static | BindingFlags.NonPublic);
+                            //curY = DrawLeftRow(leftRect, curY, item.GetLabelFor(pawn.RaceProps.IsFlesh, pawn.RaceProps.Humanlike).CapitalizeFirst(), efficiencyLabel.First, efficiencyLabel.Second, new TipSignal(textGetter, pawn.thingIDNumber ^ item.index));
+                            curY = (float)dynMethod.Invoke(obj: null, parameters: new object[] { leftRect, curY, item.GetLabelFor(pawn.RaceProps.IsFlesh, pawn.RaceProps.Humanlike).CapitalizeFirst(), efficiencyLabel.First, efficiencyLabel.Second, new TipSignal(textGetter, pawn.thingIDNumber ^ item.index) });
                         }
                     }
                     __result = curY;
