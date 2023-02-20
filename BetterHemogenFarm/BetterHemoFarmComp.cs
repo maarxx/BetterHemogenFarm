@@ -20,7 +20,7 @@ namespace BetterHemogenFarm
         public override void CompTick()
         {
             Pawn pawn = Pawn;
-            if (shouldFarmHemogen && ModsConfig.BiotechActive && pawn.Spawned && pawn.IsHashIntervalTick(15000) && pawn.BillStack != null && !pawn.BillStack.Bills.Any((Bill x) => x.recipe == RecipeDefOf.ExtractHemogenPack) && RecipeDefOf.ExtractHemogenPack.Worker.AvailableOnNow(pawn) && !pawn.health.hediffSet.HasHediff(HediffDefOf.BloodLoss))
+            if (shouldFarmHemogen && ModsConfig.BiotechActive && pawn.Spawned && pawn.IsHashIntervalTick(15000) && pawn.needs.rest.CurLevel <= 0.4f && pawn.BillStack != null && !pawn.BillStack.Bills.Any((Bill x) => x.recipe == RecipeDefOf.ExtractHemogenPack) && RecipeDefOf.ExtractHemogenPack.Worker.AvailableOnNow(pawn) && !pawn.health.hediffSet.HasHediff(HediffDefOf.BloodLoss))
             {
                 HealthCardUtility.CreateSurgeryBill(pawn, RecipeDefOf.ExtractHemogenPack, null, null, sendMessages: false);
             }
