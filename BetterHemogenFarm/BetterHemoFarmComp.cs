@@ -27,17 +27,16 @@ namespace BetterHemogenFarm
             if (pawn.IsColonist || pawn.IsPrisonerOfColony)
             {
                 Command_Toggle command_Toggle2 = new Command_Toggle();
+                command_Toggle2.defaultLabel = "CommandFireAtWillLabel".Translate();
+                command_Toggle2.defaultDesc = "CommandFireAtWillDesc".Translate();
                 command_Toggle2.hotKey = KeyBindingDefOf.Misc6;
+                //command_Toggle2.icon = TexCommand.ToggleVent;
+                command_Toggle2.icon = ContentFinder<Texture2D>.Get("UI/Commands/AssignOwner");
                 command_Toggle2.isActive = (() => ShouldFarmHemogen);
                 command_Toggle2.toggleAction = delegate
                 {
                     ShouldFarmHemogen = !ShouldFarmHemogen;
                 };
-                //command_Toggle2.icon = TexCommand.ToggleVent;
-                command_Toggle2.icon = ContentFinder<Texture2D>.Get("UI/Commands/AssignOwner");
-                command_Toggle2.defaultLabel = "CommandFireAtWillLabel".Translate();
-                command_Toggle2.defaultDesc = "CommandFireAtWillDesc".Translate();
-                command_Toggle2.tutorTag = "FireAtWillToggle";
                 yield return command_Toggle2;
             }
         }
