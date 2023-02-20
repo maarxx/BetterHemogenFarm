@@ -72,10 +72,9 @@ namespace BetterHemogenFarm
                 }
                 if (pawn.IsColonist || pawn.IsPrisonerOfColony)
                 {
-                    bool shouldSiphon = true;
                     Rect rect3 = new Rect(0f, curY, leftRect.width, 24f);
                     //Widgets.CheckboxLabeled(rect3, "SelfTend".Translate(), ref pawn.playerSettings.selfTend);
-                    Widgets.CheckboxLabeled(rect3, "Siphon", ref shouldSiphon);
+                    Widgets.CheckboxLabeled(rect3, "Siphon", ref pawn.GetComp<BetterHemogenFarm.BetterHemoFarmComp>().Props.shouldFarmHemogen);
                     curY += 28f;
                 }
                 if (pawn.IsColonist && !pawn.Dead && !pawn.DevelopmentalStage.Baby())
