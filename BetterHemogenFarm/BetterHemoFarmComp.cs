@@ -31,8 +31,7 @@ namespace BetterHemogenFarm
                 command_Toggle2.defaultLabel = "HemogenFarmLabel";
                 command_Toggle2.defaultDesc = "HemogenFarmDescription";
                 command_Toggle2.hotKey = null;
-                //command_Toggle2.icon = TexCommand.ToggleVent;
-                command_Toggle2.icon = ContentFinder<Texture2D>.Get("UI/Commands/AssignOwner");
+                command_Toggle2.icon = DefDatabase<ThingDef>.GetNamed("HemogenPack").uiIcon;
                 command_Toggle2.isActive = (() => shouldFarmHemogen);
                 command_Toggle2.toggleAction = delegate
                 {
