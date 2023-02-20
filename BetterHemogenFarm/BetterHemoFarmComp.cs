@@ -29,7 +29,7 @@ namespace BetterHemogenFarm
                 Command_Toggle command_Toggle2 = new Command_Toggle();
                 command_Toggle2.defaultLabel = "CommandFireAtWillLabel".Translate();
                 command_Toggle2.defaultDesc = "CommandFireAtWillDesc".Translate();
-                command_Toggle2.hotKey = KeyBindingDefOf.Misc6;
+                command_Toggle2.hotKey = null;
                 //command_Toggle2.icon = TexCommand.ToggleVent;
                 command_Toggle2.icon = ContentFinder<Texture2D>.Get("UI/Commands/AssignOwner");
                 command_Toggle2.isActive = (() => ShouldFarmHemogen);
