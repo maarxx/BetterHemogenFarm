@@ -13,9 +13,17 @@ namespace BetterHemogenFarm
     {
         private Pawn Pawn => (Pawn)this.parent;
         private bool shouldFarmHemogen;
+
+        // Hoisted from:
+        // RimWorld.Pawn_GuestTracker
+        // public void GuestTrackerTick()
         public override void CompTick()
         {
-            //Log.Error("Let's error on every tick!");
+            Pawn pawn = Pawn;
+            if (ModsConfig.BiotechActive && pawn.Spawned && pawn.IsHashIntervalTick(15000) && pawn.BillStack != null && !pawn.BillStack.Bills.Any((Bill x) => x.recipe == RecipeDefOf.ExtractHemogenPack) && RecipeDefOf.ExtractHemogenPack.Worker.AvailableOnNow(pawn) && !pawn.health.hediffSet.HasHediff(HediffDefOf.BloodLoss))
+            {
+                HealthCardUtility.CreateSurgeryBill(pawn, RecipeDefOf.ExtractHemogenPack, null, null, sendMessages: false);
+            }
         }
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
