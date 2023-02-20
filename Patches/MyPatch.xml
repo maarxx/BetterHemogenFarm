@@ -7,8 +7,8 @@
           <xpath>/Defs/ThingDef[defName="Human"]</xpath>
           <value>
               <comps>
-                  <li>
-                      <compClass>BetterHemogenFarm.BetterHemoFarmComp</compClass>
+                  <li Class="BetterHemogenFarm.BetterHemoFarmCompProperties">
+                    <shouldFarmHemogen>false</shouldFarmHemogen>
                   </li>
               </comps>
           </value>
@@ -16,8 +16,8 @@
       <match Class="PatchOperationAdd">
           <xpath>/Defs/ThingDef[defName="Human"]/comps</xpath>
           <value>
-              <li>
-                  <compClass>BetterHemogenFarm.BetterHemoFarmComp</compClass>
+              <li Class="BetterHemogenFarm.BetterHemoFarmCompProperties">
+                <shouldFarmHemogen>false</shouldFarmHemogen>
               </li>
           </value>
       </match>
