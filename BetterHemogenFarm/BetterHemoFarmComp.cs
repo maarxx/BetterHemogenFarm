@@ -36,12 +36,17 @@ namespace BetterHemogenFarm
                          || rest.GUIChangeArrow <= 0
                          || rest.CurLevel >= 0.6f)
                 {
-                    foreach(Bill b in pawn.BillStack.Bills)
+                    List<Bill> billsToRemove = new List<Bill>();
+                    foreach (Bill b in pawn.BillStack.Bills)
                     {
                         if (b.recipe == RecipeDefOf.ExtractHemogenPack)
                         {
-                            b.billStack.Delete(b);
+                            billsToRemove.Add(b);
                         }
+                    }
+                    foreach (Bill b in billsToRemove)
+                    {
+                        b.billStack.Delete(b);
                     }
                 }
             }
