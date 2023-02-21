@@ -60,7 +60,7 @@ namespace BetterHemogenFarm
                 yield return item;
             }
             Pawn pawn = Pawn;
-            if (pawn.IsColonist || pawn.IsPrisonerOfColony)
+            if (RecipeDefOf.ExtractHemogenPack.Worker.AvailableOnNow(pawn) && (pawn.IsColonist || pawn.IsPrisonerOfColony))
             {
                 Command_Toggle command_Toggle2 = new Command_Toggle();
                 command_Toggle2.defaultLabel = "HemogenFarmLabel";
