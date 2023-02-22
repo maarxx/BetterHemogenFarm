@@ -14,6 +14,11 @@ namespace BetterHemogenFarm
         private Pawn Pawn => (Pawn)this.parent;
         private bool shouldFarmHemogen;
 
+        public override void PostExposeData()
+        {
+            Scribe_Values.Look(ref shouldFarmHemogen, "shouldFarmHemogen", false);
+        }
+
         // Hoisted from:
         // RimWorld.Pawn_GuestTracker
         // public void GuestTrackerTick()
