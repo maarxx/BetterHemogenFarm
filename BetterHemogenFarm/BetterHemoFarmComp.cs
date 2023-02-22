@@ -20,20 +20,33 @@ namespace BetterHemogenFarm
         public override void CompTick()
         {
             Pawn pawn = Pawn;
-            Bill_Medical addedBill = null;
-            if (shouldFarmHemogen && ModsConfig.BiotechActive && pawn.Spawned && pawn.IsHashIntervalTick(750) && pawn.BillStack != null && !pawn.BillStack.Bills.Any((Bill x) => x.recipe == RecipeDefOf.ExtractHemogenPack) && RecipeDefOf.ExtractHemogenPack.Worker.AvailableOnNow(pawn) && !pawn.health.hediffSet.HasHediff(HediffDefOf.BloodLoss))
+            if (shouldFarmHemogen && ModsConfig.BiotechActive && pawn.Spawned && pawn.IsHashIntervalTick(750))
             {
                 Need rest = pawn.needs.rest;
-                if (rest.CurLevel <= 0.4f && rest.GUIChangeArrow > 0)
+                if (rest.CurLevel <= 0.4f
+                    && rest.GUIChangeArrow > 0
+                    && !pawn.health.hediffSet.HasHediff(HediffDefOf.BloodLoss)
+                    && pawn.BillStack != null
+                    && !pawn.BillStack.Bills.Any((Bill x) => x.recipe == RecipeDefOf.ExtractHemogenPack)
+                    && RecipeDefOf.ExtractHemogenPack.Worker.AvailableOnNow(pawn))
                 {
-                    addedBill = HealthCardUtility.CreateSurgeryBill(pawn, RecipeDefOf.ExtractHemogenPack, null, null, sendMessages: false);
+                    HealthCardUtility.CreateSurgeryBill(pawn, RecipeDefOf.ExtractHemogenPack, null, null, sendMessages: false);
                 }
-                else
+                else if (pawn.health.hediffSet.HasHediff(HediffDefOf.BloodLoss)
+                         || rest.GUIChangeArrow <= 0
+                         || rest.CurLevel >= 0.6f)
                 {
-                    if (addedBill != null)
+                    List<Bill> billsToRemove = new List<Bill>();
+                    foreach (Bill b in pawn.BillStack.Bills)
                     {
-                        addedBill.billStack.Delete(addedBill);
-                        addedBill = null;
+                        if (b.recipe == RecipeDefOf.ExtractHemogenPack)
+                        {
+                            billsToRemove.Add(b);
+                        }
+                    }
+                    foreach (Bill b in billsToRemove)
+                    {
+                        b.billStack.Delete(b);
                     }
                 }
             }
@@ -52,7 +65,7 @@ namespace BetterHemogenFarm
                 yield return item;
             }
             Pawn pawn = Pawn;
-            if (pawn.IsColonist || pawn.IsPrisonerOfColony)
+            if (RecipeDefOf.ExtractHemogenPack.Worker.AvailableOnNow(pawn) && (pawn.IsColonist || pawn.IsPrisonerOfColony))
             {
                 Command_Toggle command_Toggle2 = new Command_Toggle();
                 command_Toggle2.defaultLabel = "HemogenFarmLabel";
