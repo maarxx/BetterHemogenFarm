@@ -31,6 +31,7 @@ namespace BetterHemogenFarm
                 if (rest.CurLevel <= 0.4f
                     && rest.GUIChangeArrow > 0
                     && !pawn.health.hediffSet.HasHediff(HediffDefOf.BloodLoss)
+                    && pawn.health.capacities.GetLevel(PawnCapacityDefOf.Consciousness) > 0.41f
                     && pawn.BillStack != null
                     && !pawn.BillStack.Bills.Any((Bill x) => x.recipe == RecipeDefOf.ExtractHemogenPack)
                     && RecipeDefOf.ExtractHemogenPack.Worker.AvailableOnNow(pawn))
@@ -39,7 +40,8 @@ namespace BetterHemogenFarm
                 }
                 else if (pawn.health.hediffSet.HasHediff(HediffDefOf.BloodLoss)
                          || rest.GUIChangeArrow <= 0
-                         || rest.CurLevel >= 0.6f)
+                         || rest.CurLevel >= 0.6f
+                         || pawn.health.capacities.GetLevel(PawnCapacityDefOf.Consciousness) <= 0.41f)
                 {
                     List<Bill> billsToRemove = new List<Bill>();
                     foreach (Bill b in pawn.BillStack.Bills)
