@@ -28,7 +28,8 @@ namespace BetterHemogenFarm
             if (shouldFarmHemogen && ModsConfig.BiotechActive && pawn.Spawned && pawn.IsHashIntervalTick(750))
             {
                 Need rest = pawn.needs.rest;
-                if (rest.CurLevel <= 0.4f
+                if (rest != null
+                    && rest.CurLevel <= 0.4f
                     && rest.GUIChangeArrow > 0
                     && !pawn.health.hediffSet.HasHediff(HediffDefOf.BloodLoss)
                     && pawn.health.capacities.GetLevel(PawnCapacityDefOf.Consciousness) > 0.41f
@@ -39,9 +40,9 @@ namespace BetterHemogenFarm
                     HealthCardUtility.CreateSurgeryBill(pawn, RecipeDefOf.ExtractHemogenPack, null, null, sendMessages: false);
                 }
                 else if (pawn.health.hediffSet.HasHediff(HediffDefOf.BloodLoss)
-                         || rest.GUIChangeArrow <= 0
-                         || rest.CurLevel >= 0.6f
-                         || pawn.health.capacities.GetLevel(PawnCapacityDefOf.Consciousness) <= 0.41f)
+                         || pawn.health.capacities.GetLevel(PawnCapacityDefOf.Consciousness) <= 0.41f
+                         || (rest != null && (rest.GUIChangeArrow <= 0 || rest.CurLevel >= 0.6f))
+                        )
                 {
                     List<Bill> billsToRemove = new List<Bill>();
                     foreach (Bill b in pawn.BillStack.Bills)
