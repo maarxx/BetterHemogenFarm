@@ -8,9 +8,9 @@ This allows you to select a different Prisoner Interaction Mode, and enjoy the b
 
 # Table of Contents
 
-* [Introduction and Explanation](#introduction-and-explanation)
+* [Introduction](#introduction)
 
-# Introduction and Explanation
+# Introduction
 
 The mod adds a Gizmo to any Pawn (be they Colonist, Slave, or Prisoner), which allows you to flag them to automatically extract hemogen.
 
