@@ -6,6 +6,8 @@ The mod adds a Gizmo to any Pawn (be they Colonist, Slave, or Prisoner), which a
 
 This allows you to select a different Prisoner Interaction Mode, and enjoy the benefits of both.
 
+We're on Steam: https://steamcommunity.com/sharedfiles/filedetails/?id=2967718207
+
 # Table of Contents
 
 * [Introduction](#introduction)
